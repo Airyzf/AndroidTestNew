@@ -1,10 +1,12 @@
 package com.example.test.testdemo;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,6 +14,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Contacts;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -236,14 +240,15 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //File dir=new File((Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+"PicTest"));
-                File dir=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Android/data/com.nowcasting.activity/files/");
-                DeleteFiles(dir);
-                dir=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/LSSportrelease/log/user11686488/sleepLog/");
-                DeleteFiles(dir);
-                dir=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/LSSportrelease/log/BleLog/");
-                DeleteFiles(dir);
-                fileCount=0;
+//                File dir=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Android/data/com.nowcasting.activity/files/");
+//                DeleteFiles(dir);
+//                dir=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/LSSportrelease/log/user11686488/sleepLog/");
+//                DeleteFiles(dir);
+                getPermission();
+
             }
+
+
         });
 
         btnIntentTest.setOnClickListener(new View.OnClickListener() {
@@ -257,30 +262,51 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
+    private void DeleteAll() {
+        File dir=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/LSSportrelease/log/");
+        DeleteFiles(dir);
+        dir=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/LSSportrelease/networkLog/");
+        DeleteFiles(dir);
+        Toast.makeText(MainActivity.this, "已删除 "+ fileCount, Toast.LENGTH_SHORT).show();
+        fileCount=0;
+    }
+
     int fileCount=0;
     private void DeleteFiles(File dir){
-        if(!dir.isDirectory()){
-            Toast.makeText(this, "not directory", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (dir.exists()){
-            File[] files= dir.listFiles();
-            if(files!=null && files.length>0) {
-                for (File file : files) {
-                    String name = file.getName();
-                    if (name.contains(".txt") && ((name.contains("push_") || name.contains("sleep.") || name.contains("[603]")))) {
-                        file.delete();
-                        fileCount++;
-                    }
+        File[] files= dir.listFiles();
+        if(files!=null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    file.delete();
+                    fileCount++;
+                } else if (file.isDirectory()) {
+                    DeleteFiles(file);
                 }
-                Toast.makeText(MainActivity.this, "已删除: "+fileCount, Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(this, "no file", Toast.LENGTH_SHORT).show();
+                dir.delete();
             }
         }
-
     }
+
+    private void getPermission(){
+        int permissionCheck1 = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        int permissionCheck2 = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionCheck1 != PackageManager.PERMISSION_GRANTED || permissionCheck2 != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE }, 124);
+        } else {
+            DeleteAll();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 124) {
+            if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                DeleteAll();
+            }
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
