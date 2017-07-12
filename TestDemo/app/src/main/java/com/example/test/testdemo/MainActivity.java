@@ -41,6 +41,7 @@ public class MainActivity extends BaseActivity {
     private Button btnOpenCamera;
     private Button btnDeleteFile;
     private Button btnIntentTest;
+    private Button btnFragmentTest;
 
 
     @Override
@@ -59,20 +60,20 @@ public class MainActivity extends BaseActivity {
         ContentResolver resolver = getContentResolver();
         Uri uri = Uri.parse("content://sms/");
         ContentValues values = new ContentValues();
-        values.put("address","123456");
-        values.put("type",1);
+        values.put("address", "123456");
+        values.put("type", 1);
         values.put("date", System.currentTimeMillis());
-        values.put("body","this is a test message");
-        Uri ret = resolver.insert(uri,values);
-        Log.e("tag", "insertMsgContentProvider: " + ret.toString() );
+        values.put("body", "this is a test message");
+        Uri ret = resolver.insert(uri, values);
+        Log.e("tag", "insertMsgContentProvider: " + ret.toString());
     }
 
     //4.4以下可用
     private void readMsgContentProvider() {
         Uri uri = Uri.parse("content://sms/");
         ContentResolver resolver = getContentResolver();
-        Cursor cursor = resolver.query(uri,new String[]{"address","date","type","body"}, null, null, null);
-        while (cursor.moveToNext()){
+        Cursor cursor = resolver.query(uri, new String[]{"address", "date", "type", "body"}, null, null, null);
+        while (cursor.moveToNext()) {
             String address = cursor.getString(0);
             String date = cursor.getString(1);
             String type = cursor.getString(2);
@@ -91,12 +92,12 @@ public class MainActivity extends BaseActivity {
      */
     private void initBroadcast() {
         this.testBroadcast = new TestBroadcast();
-        IntentFilter intentFilter=new IntentFilter();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(testBroadcast,intentFilter);
+        registerReceiver(testBroadcast, intentFilter);
     }
 
-    private void initViews(){
+    private void initViews() {
         btnWechat = (Button) findViewById(R.id.btnWechat);
         btnGetResult = (Button) findViewById(R.id.btnGetResult);
         btnBroadcast = ((Button) findViewById(R.id.btnBroadcast));
@@ -109,20 +110,21 @@ public class MainActivity extends BaseActivity {
         btnOpenCamera = ((Button) findViewById(R.id.btnCamera));
         btnDeleteFile = ((Button) findViewById(R.id.btnDelete));
         btnIntentTest = ((Button) findViewById(R.id.btnIntentTest));
+        btnFragmentTest = ((Button) findViewById(R.id.btnFragmentTest));
 
         btnWechat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
-                Intent intent=new Intent();
-                Person p =new Person();
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent();
+                Person p = new Person();
                 p.setName("图灵");
                 p.setNum("6655");
                 bundle.putSerializable("person", p);
-                intent.putExtra("bundle",bundle);
-                intent.setClass(MainActivity.this,WechatActivity.class);
+                intent.putExtra("bundle", bundle);
+                intent.setClass(MainActivity.this, WechatActivity.class);
                 startActivity(intent);
-                Log.e("tag", "onClick: " );
+                Log.e("tag", "onClick: ");
             }
         });
 
@@ -130,9 +132,9 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(MainActivity.this,"confirm click",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity.this,ResultActivity.class);
-                intent.putExtra("testkey","hello");
-                startActivityForResult(intent,10010);
+                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+                intent.putExtra("testkey", "hello");
+                startActivityForResult(intent, 10010);
 
             }
         });
@@ -147,7 +149,7 @@ public class MainActivity extends BaseActivity {
                     getContacts();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e("tag", e.toString() );
+                    Log.e("tag", e.toString());
                 }
             }
         });
@@ -155,10 +157,10 @@ public class MainActivity extends BaseActivity {
         btnLoginTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("user","wltk");
-                bundle.putString("pwd","wltk8888");
+                bundle.putString("user", "wltk");
+                bundle.putString("pwd", "wltk8888");
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -167,12 +169,12 @@ public class MainActivity extends BaseActivity {
         btnNotifycation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,NotificationActivity.class);
+                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
             }
         });
 
-        final Intent intent=new Intent();
+        final Intent intent = new Intent();
         intent.setPackage("com.example.test.testdemo");
         intent.setAction("com.example.test.services.TestService");
         btnService.setOnClickListener(new View.OnClickListener() {
@@ -192,22 +194,22 @@ public class MainActivity extends BaseActivity {
         btnStartIntentService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1=new Intent("com.example.test.services.TestIntentService");
+                Intent intent1 = new Intent("com.example.test.services.TestIntentService");
                 intent1.setPackage("com.example.test.testdemo");
-                Bundle bundle=new Bundle();
-                bundle.putString("ACTION","s1");
+                Bundle bundle = new Bundle();
+                bundle.putString("ACTION", "s1");
                 intent1.putExtras(bundle);
 
-                Intent intent2=new Intent("com.example.test.services.TestIntentService");
+                Intent intent2 = new Intent("com.example.test.services.TestIntentService");
                 intent2.setPackage("com.example.test.testdemo");
-                Bundle bundle2=new Bundle();
-                bundle2.putString("ACTION","s2");
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("ACTION", "s2");
                 intent2.putExtras(bundle2);
 
-                Intent intent3=new Intent("com.example.test.services.TestIntentService");
+                Intent intent3 = new Intent("com.example.test.services.TestIntentService");
                 intent3.setPackage("com.example.test.testdemo");
-                Bundle bundle3=new Bundle();
-                bundle3.putString("ACTION","s3");
+                Bundle bundle3 = new Bundle();
+                bundle3.putString("ACTION", "s3");
                 intent3.putExtras(bundle3);
 
                 startService(intent1);
@@ -226,7 +228,7 @@ public class MainActivity extends BaseActivity {
         btnOpenCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,CameraActivity.class));
+                startActivity(new Intent(MainActivity.this, CameraActivity.class));
 //                try {
 //                    insertMsgContentProvider();
 //                } catch (Exception e) {
@@ -261,21 +263,29 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+
+        btnFragmentTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, FragmentTestActivity.class));
+            }
+        });
     }
 
     private void DeleteAll() {
-        File dir=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/LSSportrelease/log/");
+        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/LSSportrelease/log/");
         DeleteFiles(dir);
-        dir=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/LSSportrelease/networkLog/");
+        dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/LSSportrelease/networkLog/");
         DeleteFiles(dir);
-        Toast.makeText(MainActivity.this, "已删除 "+ fileCount, Toast.LENGTH_SHORT).show();
-        fileCount=0;
+        Toast.makeText(MainActivity.this, "已删除 " + fileCount, Toast.LENGTH_SHORT).show();
+        fileCount = 0;
     }
 
-    int fileCount=0;
-    private void DeleteFiles(File dir){
-        File[] files= dir.listFiles();
-        if(files!=null) {
+    int fileCount = 0;
+
+    private void DeleteFiles(File dir) {
+        File[] files = dir.listFiles();
+        if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
                     file.delete();
@@ -288,11 +298,11 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void getPermission(){
+    private void getPermission() {
         int permissionCheck1 = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
         int permissionCheck2 = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permissionCheck1 != PackageManager.PERMISSION_GRANTED || permissionCheck2 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE }, 124);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 124);
         } else {
             DeleteAll();
         }
@@ -310,13 +320,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==10010 && resultCode==10020) {
+        if (requestCode == 10010 && resultCode == 10020) {
             Bundle bundle = data.getExtras();
             String string = ((String) bundle.getString("contentkey"));
             Toast.makeText(MainActivity.this, string, Toast.LENGTH_LONG).show();
-        }else if (resultCode==Activity.RESULT_OK){
-            Bundle bundle=data.getExtras();
-            Bitmap bitmap= (Bitmap) bundle.get("data");
+        } else if (resultCode == Activity.RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            Bitmap bitmap = (Bitmap) bundle.get("data");
 
         }
     }
@@ -330,11 +340,11 @@ public class MainActivity extends BaseActivity {
     public void getContacts() {
         ContentResolver resolver = getContentResolver();
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        Cursor cursor = resolver.query(uri,null,null,null,null);
-        while (cursor.moveToNext()){
+        Cursor cursor = resolver.query(uri, null, null, null, null);
+        while (cursor.moveToNext()) {
             String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             String num = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            Log.e("tag", name + " " + num );
+            Log.e("tag", name + " " + num);
         }
         cursor.close();
     }
