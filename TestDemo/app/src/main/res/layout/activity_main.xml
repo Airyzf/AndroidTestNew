@@ -99,5 +99,23 @@
             android:textAllCaps="false"
             android:id="@+id/btnFragmentTest"
             android:text="FragmentTest"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="AsyncHttp"
+                android:id="@+id/btnTest1"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Test2"
+                android:id="@+id/btnTest2"/>
+        </LinearLayout>
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

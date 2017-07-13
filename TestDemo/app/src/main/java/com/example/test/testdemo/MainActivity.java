@@ -23,8 +23,17 @@ import android.widget.Toast;
 
 import com.example.test.broadcast.test.TestBroadcast;
 import com.example.test.model.Person;
+import com.example.test.toolhelper.AsyncHttpClientHelper;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
+
+import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends BaseActivity {
 
@@ -42,7 +51,11 @@ public class MainActivity extends BaseActivity {
     private Button btnDeleteFile;
     private Button btnIntentTest;
     private Button btnFragmentTest;
+    private Button btnTest1;
+    private Button btnTest2;
+    private String Tag = "tag";
 
+    private int code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +124,8 @@ public class MainActivity extends BaseActivity {
         btnDeleteFile = ((Button) findViewById(R.id.btnDelete));
         btnIntentTest = ((Button) findViewById(R.id.btnIntentTest));
         btnFragmentTest = ((Button) findViewById(R.id.btnFragmentTest));
+        btnTest1 = ((Button) findViewById(R.id.btnTest1));
+        btnTest2 = ((Button) findViewById(R.id.btnTest2));
 
         btnWechat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -270,6 +285,54 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(MainActivity.this, FragmentTestActivity.class));
             }
         });
+
+        btnTest1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.get("http://www.baidu.com", new AsyncHttpResponseHandler() {
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        if (statusCode == 200) {
+                            String res = new String(responseBody);
+                            Log.e("tag", "onSuccess: " + res);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                    }
+                });
+            }
+        });
+
+        btnTest2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    AsyncHttpClientHelper.get("http://music.163.com/api/playlist/detail?id=2884035", null, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            // If the response is JSONObject instead of expected JSONArray
+                            Log.e("tag", "onSuccess: ");
+
+                        }
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                            // Pull out the first event on the public timeline
+                            Log.e("tag", "onSuccess: ");
+                        }
+
+                    });
+                } catch (Exception e) {
+                    Log.e("tag", "onClick: " + e.getMessage());
+                }
+            }
+        });
+
     }
 
     private void DeleteAll() {
