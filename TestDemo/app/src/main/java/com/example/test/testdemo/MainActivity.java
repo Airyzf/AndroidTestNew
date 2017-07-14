@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Contacts;
@@ -56,6 +57,7 @@ public class MainActivity extends BaseActivity {
     private String Tag = "tag";
 
     private int code;
+    private Button btnBaiduSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +65,24 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         initViews();
         initBroadcast();
+        requestPermi();
         //readMsgContentProvider();
         //insertMsgContentProvider();
 
+    }
+
+    /**
+     * 6.0请求所需权限
+     */
+    private void requestPermi() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.RECORD_AUDIO,
+
+            },100);
+        }
     }
 
     //4.4以下可用
@@ -126,6 +143,7 @@ public class MainActivity extends BaseActivity {
         btnFragmentTest = ((Button) findViewById(R.id.btnFragmentTest));
         btnTest1 = ((Button) findViewById(R.id.btnTest1));
         btnTest2 = ((Button) findViewById(R.id.btnTest2));
+        btnBaiduSpeech = ((Button) findViewById(R.id.btnBaiduSpeech));
 
         btnWechat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -333,6 +351,12 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        btnBaiduSpeech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, BaiduSpeechRecognizeActivity.class));
+            }
+        });
     }
 
     private void DeleteAll() {
