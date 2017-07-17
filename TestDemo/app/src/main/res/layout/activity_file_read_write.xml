@@ -41,4 +41,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="读取"/>
+    <Button
+        android:id="@+id/btnWriteSD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="保存SD"/>
+
+    <Button
+        android:id="@+id/btnReadSD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="读取SD"/>
 </LinearLayout>

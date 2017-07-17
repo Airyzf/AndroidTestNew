@@ -7,7 +7,7 @@ import com.loopj.android.http.RequestParams;
 /**
  * Created by yuanzhaofeng
  * on 2017/7/13 14:36.
- * desc:
+ * desc:异步http请求
  * version:
  */
 public class AsyncHttpClientHelper {

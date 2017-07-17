@@ -58,6 +58,7 @@ public class MainActivity extends BaseActivity {
 
     private int code;
     private Button btnBaiduSpeech;
+    private Button btnFileTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +145,7 @@ public class MainActivity extends BaseActivity {
         btnTest1 = ((Button) findViewById(R.id.btnTest1));
         btnTest2 = ((Button) findViewById(R.id.btnTest2));
         btnBaiduSpeech = ((Button) findViewById(R.id.btnBaiduSpeech));
+        btnFileTest = ((Button) findViewById(R.id.btnFileTest));
 
         btnWechat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,6 +357,13 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, BaiduSpeechRecognizeActivity.class));
+            }
+        });
+
+        btnFileTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, FileReadWriteActivity.class));
             }
         });
     }

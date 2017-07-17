@@ -121,12 +121,23 @@
                 android:text="Test2"
                 android:id="@+id/btnTest2"/>
         </LinearLayout>
-        <Button
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="BaiduSpeech"
-            android:id="@+id/btnBaiduSpeech"/>
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="BaiduSpeech"
+                android:id="@+id/btnBaiduSpeech"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="FileTest"
+                android:id="@+id/btnFileTest"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>

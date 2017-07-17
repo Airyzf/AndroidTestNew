@@ -9,7 +9,7 @@ import java.util.Stack;
 /**
  * Created by yuanzhaofeng
  * on 2017/6/29 14:31.
- * desc:
+ * desc:Activity管理
  * version:
  */
 public class AppManager {

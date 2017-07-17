@@ -1,6 +1,7 @@
 package com.example.test.toolhelper;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by yuanzhaofeng
  * on 2017/7/17 9:52.
- * desc:
+ * desc:系统文件读写
  * version:
  */
 public class FileHelper {
@@ -27,10 +28,16 @@ public class FileHelper {
     * 这里定义的是一个文件保存的方法，写入到文件中，所以是输出流
     * */
     public void save(String filename, String filecontent) throws Exception {
-        //这里我们使用私有模式,创建出来的文件只能被本应用访问,还会覆盖原文件哦
-        FileOutputStream output = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
-        output.write(filecontent.getBytes());  //将String字符串以字节流的形式写入到输出流中
-        output.close();         //关闭输出流
+        try {
+            //这里我们使用私有模式,创建出来的文件只能被本应用访问,还会覆盖原文件哦
+            FileOutputStream output = mContext.openFileOutput(filename, Context.MODE_APPEND);
+            output.write(filecontent.getBytes());  //将String字符串以字节流的形式写入到输出流中
+            output.close();         //关闭输出流
+            Toast.makeText(mContext, "保存成功", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        
     }
 
     /*
