@@ -137,7 +137,28 @@
                 android:text="FileTest"
                 android:id="@+id/btnFileTest"/>
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="UIHanler"
+                android:id="@+id/btnUIHanler"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="ThreadHandler"
+                android:id="@+id/btnThreadHandler"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="SQLiteTest"
+                android:id="@+id/btnSQLiteTest"/>
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

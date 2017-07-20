@@ -59,6 +59,9 @@ public class MainActivity extends BaseActivity {
     private int code;
     private Button btnBaiduSpeech;
     private Button btnFileTest;
+    private Button btnUIHandler;
+    private Button btnThreadHandler;
+    private Button btnSQLiteTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +149,9 @@ public class MainActivity extends BaseActivity {
         btnTest2 = ((Button) findViewById(R.id.btnTest2));
         btnBaiduSpeech = ((Button) findViewById(R.id.btnBaiduSpeech));
         btnFileTest = ((Button) findViewById(R.id.btnFileTest));
-
+        btnUIHandler = ((Button) findViewById(R.id.btnUIHanler));
+        btnThreadHandler = ((Button) findViewById(R.id.btnThreadHandler));
+        btnSQLiteTest = ((Button) findViewById(R.id.btnSQLiteTest));
         btnWechat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -364,6 +369,27 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, FileReadWriteActivity.class));
+            }
+        });
+
+        btnUIHandler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, HandlerActivity.class));
+            }
+        });
+
+        btnThreadHandler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ThreadHandlerActivity.class));
+            }
+        });
+
+        btnSQLiteTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SQLiteActivity.class));
             }
         });
     }
